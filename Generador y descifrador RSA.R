@@ -19,8 +19,16 @@ primo_relativo <- function (m, t)
 # Devuelve el máximo común divisor de a y b
 MCD <- function(a, b)
 {
-  dividendo <- max(a,b)
-  divisor <- min(a,b)
+  if (a > b) 
+  {
+    dividendo <- a
+    divisor <- b
+  }
+  else 
+  {
+    dividendo <- b
+    divisor <- a
+  }
   
   while (divisor > 0)
   {
