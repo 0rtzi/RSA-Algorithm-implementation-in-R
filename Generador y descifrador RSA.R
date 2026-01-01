@@ -1,6 +1,9 @@
 library(numbers)
 library(gmp)
 
+# Primo relativo
+# m: entero, t: entero
+# Devuelve el menor entero >= t que es primo relativo con m
 primo_relativo <- function (m, t) 
 {
   
@@ -12,6 +15,9 @@ primo_relativo <- function (m, t)
   return (t)
 }
 
+# Máximo común divisor
+# a: entero, b: entero
+# Devuelve el máximo común divisor de a y b
 MCD <- function(a, b)
 {
   if (a > b) 
@@ -35,6 +41,9 @@ MCD <- function(a, b)
   return (dividendo)
 }
 
+# Algoritmo de Euclides
+# r: entero, m: entero
+# Devuelve una lista con el mcd de r y m, y los coeficientes x e y de la identidad de Bézout
 euclides <- function (r, m)
 {
   x0 <- 1; y0 <- 0
@@ -58,7 +67,10 @@ euclides <- function (r, m)
   return (list(mcd = r0, x = x0, y = y0))
 }
 
-modinv2 <- function(r, m)
+# Inverso Modular
+# r: entero, m: entero
+# Devuelve el inverso modular de r módulo m
+inverso_modular <- function(r, m)
 {
   resultado <- euclides(r, m)
   
@@ -73,6 +85,9 @@ modinv2 <- function(r, m)
   return(inverso)
 }
 
+# Siguiente primo
+# n: entero
+# Devuelve el siguiente número primo mayor que n
 siguiente_primo <- function(n)
 {
   num <- as.bigz(n)
@@ -86,6 +101,9 @@ siguiente_primo <- function(n)
   return(candidato)
 }
 
+# Claves RSA Grandes
+# a: entero, b: entero
+# Devuelve un vector con las claves pública (n, r) y privada (s) generadas
 claves_RSA_grandes <- function(a,b)
 {
   p <- siguiente_primo(a)
@@ -102,7 +120,7 @@ claves_RSA_grandes <- function(a,b)
   m <- (p-1) * (q-1)
   
   r <- primo_relativo(m, a+b)
-  s <- modinv2(r, m)
+  s <- inverso_modular(r, m)
   
   cat("n = ", format(n,scientific=FALSE), "\n")
   cat("r = ",format(r,scientific=FALSE), "\n")
@@ -111,17 +129,21 @@ claves_RSA_grandes <- function(a,b)
   return(c(n,r,s))
 }
 
+# Descifrar S
+# n: entero, r: entero
+# Devuelve la clave privada s asociada a la clave pública (n, r)
 descifrarS <- function(n, r)
 {
   nPrimos <- c()
   nPrimos <- factorize(as.bigz(n))
   
   m <- (nPrimos[1]-1) * (nPrimos[2]-1)
-  s <- modinv2(as.bigz(r),m)
+  s <- inverso_modular(as.bigz(r),m)
   
   return(s)
 }
 
+# Ejemplo de uso
 claves_RSA_grandes(2634758697353,293756536383)
 # n =  773977589210346510018949 
 # r =  2928515233739 
