@@ -6,6 +6,7 @@ library(gmp)
 # Devuelve el menor entero >= t que es primo relativo con m
 primo_relativo <- function (m, t) 
 {
+  
   while (MCD(t, m) != 1)
   {
     t <- t + 1
@@ -45,8 +46,8 @@ MCD <- function(a, b)
 # Devuelve una lista con el mcd de r y m, y los coeficientes x e y de la identidad de Bézout
 euclides <- function (r, m)
 {
-  x0 <- 1; #y0 <- 0
-  x1 <- 0; #y1 <- 1
+  x0 <- 1; y0 <- 0
+  x1 <- 0; y1 <- 1
   
   r0 <- r
   r1 <- m
@@ -56,14 +57,14 @@ euclides <- function (r, m)
     r2 <- r0 %% r1
     
     x2 <- x0 - cociente * x1
-    #y2 <- y0 - cociente * y1
-
+    y2 <- y0 - cociente * y1
+    
     r0 <- r1; r1 <- r2
     x0 <- x1; x1 <- x2
-    #y0 <- y1; y1 <- y2
+    y0 <- y1; y1 <- y2
   }
   
-  return (list(mcd = r0, x = x0))#, y = y0))
+  return (list(mcd = r0, x = x0, y = y0))
 }
 
 # Inverso Modular
@@ -143,7 +144,7 @@ descifrarS <- function(n, r)
 }
 
 # Ejemplo de uso
-claves_RSA_grandes(2634758697353, 293756536383)
+claves_RSA_grandes(2634758697353,293756536383)
 # n =  773977589210346510018949 
 # r =  2928515233739 
 # s =  357613632435512419442759 
